@@ -31,7 +31,6 @@ group :development, :test do
   gem 'dotenv-rails', '~> 2.2'
   gem 'pry-byebug'
   gem 'pry-rails', '~> 0.3'
-  gem 'rubocop'
   gem 'sqlite3', '~> 1.3'
   gem 'sshkit-sudo'
 end
