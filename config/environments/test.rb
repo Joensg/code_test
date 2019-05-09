@@ -19,5 +19,5 @@ Rails.application.configure do
   config.lead_api_pguid = 'c5b88f56-00e8-11e8-ba89-0ed5f89f718b'
   config.lead_api_ppartner = 'test_ppartner'
   config.lead_api_access_token = 'test_access_token'
-  config.lead_api_base_uri = 'http://test_lead_api/api/v1'
+  config.lead_api_base_uri = 'http://test_lead_api'
 end
