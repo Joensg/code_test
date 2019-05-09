@@ -1,3 +1,5 @@
 Rails.application.routes.draw do
-  root "lead_submit#index"
+  post 'post_lead' => 'lead_submit#post_lead'
+
+  root 'lead_submit#index'
 end

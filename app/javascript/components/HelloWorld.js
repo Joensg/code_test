@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Breadcrumb, BreadcrumbItem,
+import { Alert, Breadcrumb, BreadcrumbItem,
          Button, Form, FormGroup,
          Label, Input, Col, FormFeedback } from 'reactstrap';
+import axios from 'axios';
 
 class HelloWorld extends Component {
   constructor(props) {
@@ -17,7 +18,8 @@ class HelloWorld extends Component {
                 businessname: false,
                 email: false,
                 telnum: false
-            }
+            },
+            serverResponse: ''
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -70,9 +72,40 @@ class HelloWorld extends Component {
         });
     }
 
+    handleServerResponse(response) {
+        var serverResult = ''
+        if (response.data.errors.length === 0) {
+            serverResult = <Alert color="success">
+                                <h3>Server Results:</h3>
+                                <h4>{response.data.message}</h4>
+                                <p>Thank you! Your request has been submitted successfully!
+                                MakeItCheaper will contact you shortly.</p>
+                            </Alert>;
+        } else {
+            serverResult = <Alert color="danger">
+                                <h3>Server Results:</h3>
+                                <h4>{response.data.message}</h4>
+                                {response.data.errors.map(error => (
+                                  <p key={error}>Error: {error}</p>
+                                ))}
+                            </Alert>;
+        }
+
+        this.setState( { serverResponse: serverResult } );
+    }
+
     handleSubmit(event) {
-        console.log('Current State is: ' + JSON.stringify(this.state));
-        alert('Current State is: ' + JSON.stringify(this.state));
+        axios.post('http://localhost:3000/post_lead', {
+          name: this.state.fullname,
+          business_name: this.state.businessname,
+          email: this.state.email,
+          telephone_number: this.state.telnum
+        })
+        .then(response => {
+          this.handleServerResponse(response);
+        })
+        .catch(error => console.log(error));
+
         event.preventDefault();
     }
 
@@ -80,7 +113,7 @@ class HelloWorld extends Component {
     const errors = this.validate(this.state.fullname, this.state.businessname, this.state.email, this.state.telnum);
 
     return (
-      <div className="row row-content">
+      <div className="row row-content m-5">
         <div className="col-12">
           <h2>Some Test Company</h2>
           <p>Some test company details</p>
@@ -149,6 +182,9 @@ class HelloWorld extends Component {
                         </Button>
                     </Col>
                 </FormGroup>
+                <Col md={10}>
+                    {this.state.serverResponse}
+                </Col>
             </Form>
         </div>
      </div>
