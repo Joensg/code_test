@@ -10,18 +10,28 @@ describe MicLeadEnqueue, type: :service do
     it 'creates an instance of the class' do
       expect(mic_lead_enqueue).to be_kind_of(MicLeadEnqueue)
     end
+  end
 
-    it 'sets instance variable of base_uri to config base uri' do
-      expect(mic_lead_enqueue.base_uri).to eq(config_base_uri)
+  describe '#post_lead' do
+    context 'when success' do
+      it 'returns with http status created'
+
+      it 'returns with success message'
     end
 
-    context 'when base_uri is provided' do
-      let(:provided_base_uri) { 'some_test_uri' }
+    context 'when fail' do
+      context 'validation error' do
+        it 'returns with http status bad request'
 
-      subject(:mic_lead_enqueue) { described_class.new provided_base_uri }
+        it 'error message contains details about validation failure'
+      end
 
-      it 'sets instance variable of base_uri to provided base_uri' do
-        expect(mic_lead_enqueue.base_uri).to eq(provided_base_uri)
+      context 'unauthorized error' do
+        it 'returns with http status unauthorized'
+      end
+
+      context 'internal server error' do
+        it 'returns with http status internal server error'
       end
     end
   end
