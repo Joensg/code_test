@@ -2,16 +2,6 @@ require 'rails_helper'
 
 describe MicLeadEnqueue, type: :service do
 
-  describe '.new' do
-    let(:config_base_uri) { Rails.configuration.lead_api_base_uri }
-
-    subject(:mic_lead_enqueue) { described_class.new }
-
-    it 'creates an instance of the class' do
-      expect(mic_lead_enqueue).to be_kind_of(MicLeadEnqueue)
-    end
-  end
-
   describe '#post_lead' do
     let(:post_params) do
       {

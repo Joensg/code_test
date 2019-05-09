@@ -2,9 +2,6 @@ class MicLeadEnqueue
   include HTTParty
   base_uri Rails.configuration.lead_api_base_uri
 
-  def initialize
-  end
-
   def self.post_lead lead_details
     options = { query: lead_details.merge(self.additional_params) }
     post('/api/v1/create', options)
