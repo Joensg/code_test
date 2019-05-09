@@ -19,6 +19,7 @@ class HelloWorld extends Component {
                 email: false,
                 telnum: false
             },
+            submitted: false,
             serverResponse: ''
         };
 
@@ -36,21 +37,29 @@ class HelloWorld extends Component {
             telnum: ''
         };
 
-        if (this.state.touched.fullname && fullname.length < 3)
+        if (this.state.submitted && fullname.length === 0)
+            errors.fullname = 'This field is required';
+        else if (this.state.touched.fullname && fullname.length < 3)
             errors.fullname = 'Full Name should be >= 3 characters';
         else if (this.state.touched.fullname && fullname.length > 100)
             errors.fullname = 'Full Name should be <= 100 characters';
 
-        if (this.state.touched.businessname && businessname.length < 3)
+        if (this.state.submitted && businessname.length === 0)
+            errors.businessname = 'This field is required';
+        else if (this.state.touched.businessname && businessname.length < 3)
             errors.businessname = 'Business Name should be >= 3 characters';
         else if (this.state.touched.businessname && businessname.length > 100)
             errors.businessname = 'Business Name should be <= 100 characters';
 
-        if (this.state.touched.email && email.split('').filter(x => x === '@').length !== 1)
+        if (this.state.submitted && email.length === 0)
+            errors.email = 'This field is required';
+        else if (this.state.touched.email && email.split('').filter(x => x === '@').length !== 1)
             errors.email = 'Email should contain a @';
 
         const reg = /^\d+$/;
-        if (this.state.touched.telnum && !reg.test(telnum))
+        if (this.state.submitted && telnum.length === 0)
+            errors.telnum = 'This field is required';
+        else if (this.state.touched.telnum && !reg.test(telnum))
             errors.telnum = 'Tel. Number should contain only numbers';
 
         return errors;
@@ -95,6 +104,8 @@ class HelloWorld extends Component {
     }
 
     handleSubmit(event) {
+        this.setState( { submitted: true } );
+
         axios.post('http://localhost:3000/post_lead', {
           name: this.state.fullname,
           business_name: this.state.businessname,
