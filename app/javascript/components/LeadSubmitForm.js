@@ -4,7 +4,7 @@ import { Alert, Breadcrumb, BreadcrumbItem,
          Label, Input, Col, FormFeedback } from 'reactstrap';
 import axios from 'axios';
 
-class HelloWorld extends Component {
+class LeadSubmitForm extends Component {
   constructor(props) {
         super(props);
 
@@ -203,4 +203,4 @@ class HelloWorld extends Component {
   }
 }
 
-export default HelloWorld
+export default LeadSubmitForm
